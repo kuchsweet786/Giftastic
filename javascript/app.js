@@ -34,3 +34,15 @@ $(".gifButtons").on("click", function() {
         $(this).attr("data-state", "still");
     }
 });
+
+    var addCountry =  $("#country-input").val().trim();
+
+    if(var===null){
+        country=$(this).attr()
+    }
+
+else{
+        var newBtn=$("<button>");
+        newBtn.attr(date=var)
+        newBtn.text(var)
+        $(.button-div).append/push/prepend(newBtn);
