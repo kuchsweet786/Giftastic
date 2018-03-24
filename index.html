@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Giphy</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+</head>
+<body>
+
+<div class="button-div">
+
+<button data-country="india">
+india
+</button>
+
+<button data-country="usa">
+    usa
+</button>
+
+<button data-country="canada">
+    canada
+</button>
+<button data-country="china">
+    china
+</button>
+<button data-country="rome">
+    rome
+</button>
+
+</div>
+
+
+<div class="container">
+    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+<div id="gifs-appear-here"></div>
+    </div>
+
+
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <form id="gif-form" role="form">
+
+            <div class="form-group">
+                <label for="country-input">Add country</label>
+                <input type="text" id="country-input">
+            </div>
+        </form>
+
+
+
+<div id="gifButtons" class="container">
+
+
+    <button id="addGif" class="btn btn-primary"> Add any Country
+
+    </button>
+
+    <button id="removeGif" class="btn btn-primary">  Remove Country
+
+    </button>
+
+
+
+</div>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $("button").on("click", function() {
+        var country = $(this).attr("data-country");
+        console.log(this);
+        console.log(country);
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+            country + "&api_key=aGkqn1xuKdvmGyXTNrTtCge0uVBTFv9m";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+
+        })
+
+
+            .then(function(response) {
+                var results = response.data;
+
+                for (var i = 0; i < results.length; i++) {
+
+                    if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+
+                        var gifDiv = $("<div class='item'>");
+
+                        var rating = results[i].rating;
+
+                        var p = $("<p>").text("Rating: " + rating);
+
+                        var countryImage = $("<img>");
+
+                        countryImage.attr("src", results[i].images.fixed_height.url);
+
+                        gifDiv.prepend(p);
+                        gifDiv.prepend(countryImage);
+
+                        $("#gifs-appear-here").prepend(gifDiv);
+
+
+                        $("#addGif").on("click", function () {
+                            var addCountry =  $("#country-input").val().trim();
+
+                            console.log("country added", addCountry);
+
+                            country.push(addCountry);
+                            console.log("country", country);
+                            reDraw()
+                        })
+
+                        $("#removeGif").on("click", function() {
+                            console.log("country", country);
+                            country.pop();
+                            console.log("country2", country);
+                            reDraw()
+                        })
+
+
+
+                    }
+                }
+
+                });
+            });
+
+        // $("#addGif").on("click", function () {
+        //     var addCountry =  $("#country-input").val().trim();
+        //
+        //     console.log("country added", addCountry);
+        //
+        //     country.push(addCountry);
+        //     console.log("country", country);
+        //     reDraw()
+        // })
+        //
+        // $("#removeGif").on("click", function() {
+        //     console.log("country", country);
+        //     country.pop();
+        //     console.log("country2", country);
+        //     reDraw()
+        // })
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+body{
+    background: url("/css/images/background.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: black;
+}
+* {
+    box-sizing: border-box;
+}
